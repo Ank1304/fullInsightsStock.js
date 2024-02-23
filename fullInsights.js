@@ -4,51 +4,16 @@ const yahooFinance = require('yahoo-finance2').default;
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Define query options for Yahoo Finance API
-const queryOptions = {
-  modules: [
-    "assetProfile",
-    "balanceSheetHistory",
-    "balanceSheetHistoryQuarterly",
-    "calendarEvents",
-    "cashflowStatementHistory",
-    "cashflowStatementHistoryQuarterly",
-    "defaultKeyStatistics",
-    "earnings",
-    "earningsHistory",
-    "earningsTrend",
-    "financialData",
-    "fundOwnership",
-    "fundPerformance",
-    "fundProfile",
-    "incomeStatementHistory",
-    "incomeStatementHistoryQuarterly",
-    "indexTrend",
-    "industryTrend",
-    "insiderHolders",
-    "insiderTransactions",
-    "institutionOwnership",
-    "majorDirectHolders",
-    "majorHoldersBreakdown",
-    "netSharePurchaseActivity",
-    "price",
-    "quoteType",
-    "recommendationTrend",
-    "secFilings",
-    "sectorTrend",
-    "summaryDetail",
-    "summaryProfile",
-    "symbol",
-    "topHoldings",
-    "upgradeDowngradeHistory"
-  ]
-};
-
 // Endpoint to fetch Yahoo Finance data for a given symbol
 app.get('/quote/:symbol', async (req, res) => {
   try {
     const { symbol } = req.params;
-    // Fetch quote summary for the provided symbol
+    const { modules } = req.query;
+
+    // Parse modules from query string
+    const queryOptions = modules ? { modules: modules.split(',') } : {};
+
+    // Fetch quote summary for the provided symbol and queryOptions
     const quoteSummary = await yahooFinance.quoteSummary(symbol, queryOptions);
     // Send the JSON response
     res.json(quoteSummary);
