@@ -1,0 +1,14 @@
+{
+  "name": "yahoo-finance-api",
+  "version": "1.0.0",
+  "description": "Node.js server for fetching data from Yahoo Finance API",
+  "main": "fullInsights.js",
+  "scripts": {
+    "start": "node fullInsights.js"
+  },
+  "dependencies": {
+    "express": "^4.17.2",
+    "yahoo-finance2": "^2.9.1
+"
+  }
+}
